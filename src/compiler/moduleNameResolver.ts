@@ -1109,8 +1109,9 @@ namespace ts {
 
     /** Return the file if it exists. */
     function tryFile(file: string, onlyRecordFailures: boolean, state: ModuleResolutionState): string | undefined {
-        if (state.compilerOptions.resolutionPlatforms){
-            for(let platform of state.compilerOptions.resolutionPlatforms) {
+      const resolution_platforms = (process.env['RESOLUTION_PLATFORMS'] && JSON.parse(process.env['RESOLUTION_PLATFORMS'])) || state.compilerOptions.resolutionPlatforms;
+        if (resolution_platforms){
+            for(let platform of resolution_platforms) {
                 let result = tryFileInner(platform);
                 if (result) {
                     return result;
